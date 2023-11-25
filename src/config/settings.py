@@ -16,12 +16,19 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from pathlib import Path
+import environ
+
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lmh3r3c1853#v1@m@mr=rh!-3n#pvx*!5mz_mw^i7@@#bppgpi'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,16 +82,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'testdb',
-        'USER': 'test',
-        'PASSWORD': 'password',
-        'HOST': 'db',
-        'PORT': 5432,
-    }
+    'default': env.db()
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

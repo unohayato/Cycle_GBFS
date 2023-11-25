@@ -5,3 +5,6 @@ uvicorn
 daphne
 channels
 channels-redis
+dj-database-url
+python-dotenv
+django-environ
