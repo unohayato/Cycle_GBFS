@@ -22,14 +22,18 @@
 
       <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
         <!-- Login Link -->
-        <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
-          <a href="{% url 'login' %}" class="relative -top-[1px]">Log in</a>
-        </button>
+        <a href="{% url 'login' %}" class="relative -top-[1px]">
+          <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
+            Log in
+          </button>
+        </a>
       
         <!-- Signup Link -->
-        <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
-          <a href="{% url 'signup' %}" class="relative -top-[1px]">Sign up</a>
-        </button>
+        <a href="{% url 'signup' %}" class="relative -top-[1px]">
+          <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
+            Sign up
+          </button>
+        </a>
       </div> 
       
     </div>
