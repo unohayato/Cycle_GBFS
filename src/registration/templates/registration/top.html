@@ -8,36 +8,37 @@
 {% endblock %}
 
 {% block nav %}
-  <nav class="absolute top-5 left-10 m-4"> <!-- leftの値を調整 -->
-    <a href="/" class="text-3xl font-bold text-blue-600 hover:text-blue-800 transition duration-300">Open Cycle</a>
+  <nav class="absolute top-5 left-5 md:left-10 lg:left-20">
+    <a href="/" class="text-2xl md:text-3xl font-bold text-[#3C46FF] hover:bg-[#0000FF] transition duration-300">Open Cycle</a>
   </nav>
 {% endblock nav %}
 
 {% block main %}
-  <div class="flex min-h-screen bg-gray-300">
+  <div class="flex flex-col md:flex-row min-h-screen bg-gray-300">
 
     <!-- Left Half for Animated Text -->
     <div class="flex-1 flex items-center justify-center p-4">
       <div class="typing">
-        <h1 class="text-6xl font-bold text-gray-800">Let's cycle life.</h1> 
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-800">Let's cycle life.</h1> 
       </div>
     </div>
 
     <!-- Right Half for Links -->
     <div class="flex-1 flex flex-col items-center justify-center p-4">
-      <h2 class="text-4xl font-extrabold mb-8 text-gray-800">Get started</h2>
-      
-      <div class="flex justify-center space-x-6">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-gray-800">Get started</h2>
+
+      <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
         <!-- Login Link -->
-        <p>
-          <a href="{% url 'login' %}" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">Log in</a>
-        </p>
+        <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
+          <a href="{% url 'login' %}" class="relative -top-[1px]">Log in</a>
+        </button>
       
         <!-- Signup Link -->
-        <p>
-          <a href="{% url 'signup' %}" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">Sign up</a>
-        </p>
-      </div>      
+        <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
+          <a href="{% url 'signup' %}" class="relative -top-[1px]">Sign up</a>
+        </button>
+      </div> 
+      
     </div>
 
   </div>
