@@ -1,10 +1,41 @@
 {% extends "registration/base.html" %}
-{% block main %}
-  <h2>Get started</h2>
-  
-  <!-- ログインフォームへのリンク -->
-  <p><a href="{% url 'login' %}">ログイン</a></p>
+{% load static %}
 
-  <!-- サインアップへのリンク -->
-  <p><a href="{% url 'signup' %}">サインアップ</a></p>
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'registration/css/top.css' %}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  {{ block.super }}
+{% endblock %}
+
+{% block nav %}{% endblock nav %}
+
+{% block main %}
+  <div class="flex min-h-screen bg-gray-100">
+    
+    <!-- Left Half for Animated Text -->
+    <div class="flex-1 flex items-center justify-center">
+      <div class="typing">
+        <h1 class="text-6xl font-semibold">Let's cycle life.</h1>
+      </div>
+    </div>
+
+    <!-- Right Half for Links -->
+    <div class="flex-1 flex flex-col items-center justify-center">
+      <h2 class="text-3xl font-bold mb-6">Get started</h2>
+      
+      <!-- Container for Links -->
+      <div class="flex justify-center space-x-4">
+        <!-- Login Link -->
+        <p>
+          <a href="{% url 'login' %}" class="text-blue-600 hover:text-blue-800 transition duration-300 text-xl">ログイン</a>
+        </p>
+
+        <!-- Signup Link -->
+        <p>
+          <a href="{% url 'signup' %}" class="text-blue-600 hover:text-blue-800 transition duration-300 text-xl">サインアップ</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
 {% endblock %}

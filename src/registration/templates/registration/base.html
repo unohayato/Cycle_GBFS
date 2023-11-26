@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アカウント管理</title>
+  {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>アカウント管理</title>
+  {% endblock %}
 </head>
 <body>
-  <nav>
-    <a href="/">アカウント管理</a>
-  </nav>
+  {% block nav %}
+    <nav>
+      <a href="/">アカウント管理</a>
+    </nav>
+  {% endblock nav %}
   <div>
-  {% block main %}
-    <p>※コンテンツがありません。</p>
-  {% endblock %}
+    {% block main %}
+      <p>※コンテンツがありません。</p>
+    {% endblock %}
   </div>
 </body>
 </html>

@@ -1,0 +1,28 @@
+@keyframes typing {
+  from { width: 0; }
+  to { width: 18ch; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: black; }
+}
+
+.typing {
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1.2;
+  overflow: hidden;
+  border-right: .15em solid black;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  width: 18ch;
+  padding-right: .15em;
+  padding-bottom: .1em; /* 下部の余白を追加 */
+  height: auto; /* 高さを調整 */
+  vertical-align: middle; /* 垂直方向の位置を調整 */
+  animation: 
+    typing 2.0s steps(16, end),
+    blink-caret .75s step-end infinite;
+}
