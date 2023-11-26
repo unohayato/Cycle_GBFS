@@ -7,34 +7,37 @@
   {{ block.super }}
 {% endblock %}
 
-{% block nav %}{% endblock nav %}
+{% block nav %}
+  <nav class="absolute top-5 left-10 m-4"> <!-- leftの値を調整 -->
+    <a href="/" class="text-3xl font-bold text-blue-600 hover:text-blue-800 transition duration-300">Open Cycle</a>
+  </nav>
+{% endblock nav %}
 
 {% block main %}
-  <div class="flex min-h-screen bg-gray-100">
-    
+  <div class="flex min-h-screen bg-gray-300">
+
     <!-- Left Half for Animated Text -->
-    <div class="flex-1 flex items-center justify-center">
+    <div class="flex-1 flex items-center justify-center p-4">
       <div class="typing">
-        <h1 class="text-6xl font-semibold">Let's cycle life.</h1>
+        <h1 class="text-6xl font-bold text-gray-800">Let's cycle life.</h1> 
       </div>
     </div>
 
     <!-- Right Half for Links -->
-    <div class="flex-1 flex flex-col items-center justify-center">
-      <h2 class="text-3xl font-bold mb-6">Get started</h2>
+    <div class="flex-1 flex flex-col items-center justify-center p-4">
+      <h2 class="text-4xl font-extrabold mb-8 text-gray-800">Get started</h2>
       
-      <!-- Container for Links -->
-      <div class="flex justify-center space-x-4">
+      <div class="flex justify-center space-x-6">
         <!-- Login Link -->
         <p>
-          <a href="{% url 'login' %}" class="text-blue-600 hover:text-blue-800 transition duration-300 text-xl">ログイン</a>
+          <a href="{% url 'login' %}" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">Log in</a>
         </p>
-
+      
         <!-- Signup Link -->
         <p>
-          <a href="{% url 'signup' %}" class="text-blue-600 hover:text-blue-800 transition duration-300 text-xl">サインアップ</a>
+          <a href="{% url 'signup' %}" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">Sign up</a>
         </p>
-      </div>
+      </div>      
     </div>
 
   </div>
