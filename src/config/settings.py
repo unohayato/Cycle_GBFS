@@ -137,3 +137,21 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login/"
 
 AUTH_USER_MODEL = 'registration.User'
+
+# FRONTEND_URL = "http://localhost:8080"
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'INFO',
+#         },
+#     },
+# }
