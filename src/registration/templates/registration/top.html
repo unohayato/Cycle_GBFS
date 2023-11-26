@@ -1,0 +1,10 @@
+{% extends "registration/base.html" %}
+{% block main %}
+  <h2>Get started</h2>
+  
+  <!-- ログインフォームへのリンク -->
+  <p><a href="{% url 'login' %}">ログイン</a></p>
+
+  <!-- サインアップへのリンク -->
+  <p><a href="{% url 'signup' %}">サインアップ</a></p>
+{% endblock %}
