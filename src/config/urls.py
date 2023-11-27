@@ -25,7 +25,13 @@ index_view = TemplateView.as_view(template_name="registration/index.html")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', login_required(index_view), name="index"),
-    path('', include("django.contrib.auth.urls")),
-    path('signup/', views.SignUpView.as_view(), name="signup"),
+    path('', views.top, name="top"),
+    path('index/', login_required(index_view), name="index"),
+    
+    path('registration/', include("django.contrib.auth.urls")),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('signup/', views.CustomSignUpView.as_view(), name="signup"),
+    path('password_change/', views.CustomPasswordChangeView.as_view(), name='password_change'),
+    path('password_reset/', views.CustomPasswordResetView.as_view(), name='password_reset'),
+
 ]

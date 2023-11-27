@@ -1,9 +1,61 @@
 {% extends "registration/base.html" %}
-{% block main %}
-  <h2>会員ページ</h2>
-  <p>{{ user }}さん、こんにちは！</p>
+{% load static %}
 
-  <p><a href="{% url 'logout' %}">ログアウト</a></p>
-  <p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
-  <p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
+{% block nav %}{% endblock nav %}
+
+{% block main %}
+  <div class="flex h-screen bg-gray-300">
+    <!-- Sidebar -->
+    <div class="flex flex-col justify-between h-screen w-64 p-4 bg-gray-100">
+      <div>
+        <!-- その他のコンテンツ -->
+      </div>
+      <button id="modalBtn" class="px-4 py-2 bg-[#3C46FF] text-gray-100 rounded hover:bg-[#0000FF] focus:outline-none">
+        {{ user }}さんの設定
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 p-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-[#3C46FF]">Let's cycle</h2>
+      <!-- Content goes here -->
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-1/3 shadow-lg rounded-md bg-white">
+      <div class="flex justify-end items-center mb-4">
+        <button id="closeModal" class="text-[#3C46FF] hover:text-[#0000FF] text-2xl">&times;</button>
+      </div>
+      <p class="mb-4">
+        <a href="{% url 'logout' %}" class="text-[#3C46FF] hover:text-[#0000FF] hover:underline">ログアウト</a>
+      </p>
+      <p>
+        <a href="{% url 'password_change' %}" class="text-[#3C46FF] hover:text-[#0000FF] hover:underline">パスワードの変更</a>
+      </p>
+    </div>
+  </div>
+  
+
+  <script>
+    // Modal script
+    const modal = document.getElementById("modal");
+    const modalBtn = document.getElementById("modalBtn");
+    const closeModal = document.getElementById("closeModal");
+
+    modalBtn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    closeModal.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
 {% endblock %}

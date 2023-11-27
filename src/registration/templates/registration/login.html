@@ -1,6 +1,24 @@
 {% extends "registration/base.html" %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'registration/css/form.css' %}">
+  {{ block.super }}
+{% endblock %}
+
 {% block main %}
-  <h2>ログイン</h2>
-  {% include "registration/_form.html" with submit_label="ログイン" %}
-  <p><a href="{% url 'signup' %}">サインアップ</a></p>
+  <div class="flex justify-center items-center min-h-screen bg-gray-300">
+    <!-- Centered Login Form -->
+    <div class="p-4 w-full max-w-md">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-[#3C46FF] text-center">
+        ログイン
+      </h2>
+        {% include "registration/_form.html" with submit_label="ログイン" %}
+        <p class="text-center mt-4">
+          <a href="{% url 'password_reset' %}" class="text-[#3C46FF] hover:underline">
+            パスワードを忘れた場合
+          </a>
+        </p>
+    </div>
+  </div>
 {% endblock %}

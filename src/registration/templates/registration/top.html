@@ -1,0 +1,42 @@
+{% extends "registration/base.html" %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'registration/css/top.css' %}">
+  {{ block.super }}
+{% endblock %}
+
+{% block main %}
+  <div class="flex flex-col md:flex-row min-h-screen bg-gray-300">
+
+    <!-- Left Half for Animated Text -->
+    <div class="flex-1 flex items-center justify-center p-4">
+      <div class="typing">
+        <h1 class="text-4xl md:text-6xl font-bold text-[#3C46FF]">Let's cycle life.</h1> 
+      </div>
+    </div>
+
+    <!-- Right Half for Links -->
+    <div class="flex-1 flex flex-col items-center justify-center p-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-[#3C46FF]">Get started</h2>
+
+      <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+        <!-- Login Link -->
+        <a href="{% url 'login' %}" class="relative -top-[1px]">
+          <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
+            Log in
+          </button>
+        </a>
+      
+        <!-- Signup Link -->
+        <a href="{% url 'signup' %}" class="relative -top-[1px]">
+          <button class="relative flex h-12 w-40 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-white hover:bg-[#0000FF]">
+            Sign up
+          </button>
+        </a>
+      </div> 
+      
+    </div>
+
+  </div>
+{% endblock %}
