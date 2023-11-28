@@ -1,0 +1,10 @@
+Django
+psycopg2-binary
+redis
+uvicorn
+daphne
+channels
+channels-redis
+dj-database-url
+python-dotenv
+django-environ
