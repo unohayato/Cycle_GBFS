@@ -41,6 +41,7 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:8080']
 # Application definition
 
 INSTALLED_APPS = [
+    'chat',
     'registration',
     'django.contrib.admin',
     'django.contrib.auth',

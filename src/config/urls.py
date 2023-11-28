@@ -28,6 +28,8 @@ urlpatterns = [
     path('', views.top, name="top"),
     path('index/', login_required(index_view), name="index"),
     
+    path('chat/', include('chat.urls')),
+    
     path('registration/', include("django.contrib.auth.urls")),
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('signup/', views.CustomSignUpView.as_view(), name="signup"),
