@@ -5,39 +5,145 @@
 
 {% block main %}
   <div class="flex h-screen bg-gray-300">
-    <!-- Sidebar -->
-    <div class="flex flex-col justify-between h-screen w-64 p-4 bg-gray-100">
-      <div>
-        <!-- その他のコンテンツ -->
+      <!-- Sidebar -->
+      <div class="flex flex-col justify-between h-screen w-64 p-4 bg-gray-100">
+          <div>
+              <!-- ルーム作成フォーム -->
+              <div class="mb-4">
+                  <label for="new-room-name" class="block text-sm font-medium text-gray-700">部屋の作成</label>
+                  <div class="mt-1">
+                      <input type="text" id="new-room-name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="新しい部屋名">
+                  </div>
+                  <button id="create-room" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none">作成</button>
+              </div>
+              <div id="room-list">
+                <ul id="room-list-ul">
+                  <!-- ルームリストはここに動的に生成されます -->
+                </ul>
+              </div>
+          </div>
+          <button id="modalBtn" class="px-4 py-2 bg-[#3C46FF] text-gray-100 rounded hover:bg-[#0000FF] focus:outline-none">
+              {{ user }}さんの設定
+          </button>
       </div>
-      <button id="modalBtn" class="px-4 py-2 bg-[#3C46FF] text-gray-100 rounded hover:bg-[#0000FF] focus:outline-none">
-        {{ user }}さんの設定
-      </button>
-    </div>
 
-    <!-- Content -->
-    <div class="flex-1 p-4">
-      <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-[#3C46FF]">Let's cycle</h2>
-      What chat room would you like to enter?<br>
-      <input id="room-name-input" type="text" size="100"><br>
-      <input id="room-name-submit" type="button" value="Enter">
-  
-      <script>
-          document.querySelector('#room-name-input').focus();
-          document.querySelector('#room-name-input').onkeyup = function(e) {
-              if (e.key === 'Enter') {  // enter, return
-                  document.querySelector('#room-name-submit').click();
-              }
-          };
-  
-          document.querySelector('#room-name-submit').onclick = function(e) {
-              var roomName = document.querySelector('#room-name-input').value;
-              window.location.pathname = '/chat/' + roomName + '/';
-          };
-      </script>
-      <!-- Content goes here -->
-    </div>
+      <!-- Content -->
+      <div class="flex-1 p-4">
+          <div class="chat-container">
+              <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-[#3C46FF]">Let's Chat</h2>
+              <div class="mb-4">
+                  <textarea id="chat-log" cols="100" rows="20" class="w-full p-2 border rounded" readonly></textarea>
+              </div>
+              <div class="mb-4 flex">
+                  <input id="chat-message-input" type="text" class="flex-1 p-2 border rounded mr-2" placeholder="メッセージを入力">
+                  <button id="chat-message-submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none">送信</button>
+              </div>
+          </div>
+      </div>
   </div>
+
+<!-- WebSocketの接続とイベントハンドラ -->
+<script>
+  let chatSocket;
+  let chatLogStorage = {}; // 各部屋のチャットログを保持するオブジェクト
+  let currentRoom = ''; // 現在選択中の部屋名
+
+  // 新しい部屋を作成
+  document.getElementById('create-room').addEventListener('click', function() {
+    let roomName = document.getElementById('new-room-name').value;
+    if (roomName) {
+      // 新しい部屋をサーバーに通知
+      if (chatSocket) {
+        chatSocket.send(JSON.stringify({'type': 'create_room', 'room_name': roomName}));
+      }
+
+      // ルームリストに新しい部屋を追加
+      addRoomToList(roomName);
+
+      document.getElementById('new-room-name').value = '';
+    }
+  });
+
+  // ルームリストに新しい部屋を追加
+  function addRoomToList(roomName) {
+    let roomList = document.getElementById('room-list-ul');
+    let newRoomLi = document.createElement('li');
+    let newRoom = document.createElement('a');
+    newRoom.classList.add('room-item');
+    newRoom.textContent = roomName;
+    newRoom.href = `#`; // ページ遷移を防ぐためにダミーのリンク
+    newRoom.dataset.roomName = roomName;
+
+    // 新しい部屋に対してクリックイベントリスナーを追加
+    newRoom.addEventListener('click', function(event) {
+      event.preventDefault(); // ページ遷移を防ぐ
+      connectToRoom(roomName);
+      currentRoom = roomName;
+    });
+
+    newRoomLi.appendChild(newRoom);
+    roomList.appendChild(newRoomLi);
+  }
+
+  // 部屋に接続
+  function connectToRoom(roomName) {
+    if (chatSocket) {
+      chatSocket.close();
+    }
+
+    chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+
+    chatSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      addMessageToLog(roomName, data.message);
+      if (roomName === currentRoom) {
+        updateChatLogDisplay(roomName);
+      }
+    };
+
+    chatSocket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+    };
+
+    updateChatLogDisplay(roomName);
+  }
+
+  // チャットログにメッセージを追加
+  function addMessageToLog(roomName, message) {
+    if (!chatLogStorage[roomName]) {
+      chatLogStorage[roomName] = [];
+    }
+    chatLogStorage[roomName].push(message);
+  }
+
+  // チャットログを表示
+  function updateChatLogDisplay(roomName) {
+    const log = chatLogStorage[roomName] || [];
+    document.querySelector('#chat-log').value = log.join('\n');
+  }
+
+  // メッセージ送信
+  document.querySelector('#chat-message-submit').onclick = function() {
+    const messageInputDom = document.querySelector('#chat-message-input');
+    const message = messageInputDom.value;
+    if (chatSocket && currentRoom) {
+      chatSocket.send(JSON.stringify({'message': message}));
+    }
+    messageInputDom.value = '';
+  };
+
+  // WebSocketのonmessageハンドラ
+  chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    addMessageToLog(currentRoom, data.message); // ここでメッセージをログに追加
+    if (currentRoom === roomName) {
+      updateChatLogDisplay(currentRoom);
+    }
+  };
+</script>
+
+
+
 
   <!-- Modal -->
   <div id="modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
