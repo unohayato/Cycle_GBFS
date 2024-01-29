@@ -21,15 +21,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from registration import views
 
-# index_view = TemplateView.as_view(template_name="registration/index.html")
-index_view = TemplateView.as_view(template_name="chat/index.html")
+index_view = TemplateView.as_view(template_name="registration/index.html")
+# index_view = TemplateView.as_view(template_name="chat/index.html")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.top, name="top"),
     path('index/', login_required(index_view), name="index"),
-    
-    path('chat/', include('chat.urls')),
     
     path('registration/', include("django.contrib.auth.urls")),
     path('login/', views.CustomLoginView.as_view(), name='login'),
