@@ -41,8 +41,6 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:8080']
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
-    'chat',
     'registration',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,7 +79,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-ASGI_APPLICATION = 'config.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
